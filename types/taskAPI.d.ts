@@ -1,0 +1,1 @@
+export declare function delay(seconds: number?, f: Function?): any
