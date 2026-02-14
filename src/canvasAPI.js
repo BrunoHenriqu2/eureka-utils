@@ -1,5 +1,7 @@
 // export const leftPosition = 0 // The position is relative, so I can't do that, despite being more easier.
 
+export const version = "1.0.0"
+
 export function writeIn(canvas, textObj) {
     if (!(canvas instanceof Node) || canvas.nodeName !== "CANVAS") { return console.log("no canvas detected!") }
 
