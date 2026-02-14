@@ -4,9 +4,9 @@
         "target": "esnext",
         "baseUrl": ".",
         "paths": {
-            "./src/canvasAPI.js": ["./types/canvasAPI.d.ts"],
-            "./src/safeCallAPI.js": ["./types/safeCallAPI.d.ts"],
-            "./src/taskAPI.js": ["./types/taskAPI.d.ts"]
+            "./src/canvas-api.js": ["types/canvas-api.d.ts"],
+            "./src/safecall-api.js": ["types/safecall-api.d.ts"],
+            "./src/task-api.js": ["types/task-api.d.ts"]
         }
     }
 }
