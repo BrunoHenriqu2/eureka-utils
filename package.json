@@ -1,0 +1,30 @@
+{
+  "name": "eureka-utils",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/main.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "intellibuild": "tsc --watch",
+    "prepublishOnly": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BrunoHenriqu2/eureka-utils.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "type": "module",
+  "types": "dist/main.d.ts",
+  "bugs": {
+    "url": "https://github.com/BrunoHenriqu2/eureka-utils/issues"
+  },
+  "homepage": "https://github.com/BrunoHenriqu2/eureka-utils#readme",
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  }
+}
