@@ -4,6 +4,9 @@ export { default as canvasAPI } from "./api/canvasAPI.js"
 export { default as taskAPI } from "./api/taskAPI.js"
 export { default as fileAPI } from "./api/fileAPI.js"
 export { default as mathAPI } from "./api/mathAPI.js"
+export { default as elementAPI } from "./api/elementAPI.js"
+export { default as msgAPI } from "./api/msgAPI.js"
+export { default as currencyAPI } from "./api/currencyAPI.js"
 
 /* Class */
 export { default as DomMorph } from "./class/DomMorph.js"

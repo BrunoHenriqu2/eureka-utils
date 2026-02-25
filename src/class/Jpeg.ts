@@ -16,16 +16,16 @@ export default class Jpeg {
             const fileReader = new FileReader
 
             fileReader.onload = (e) => {
-                const img_url = e.target?.result
+                const img_url = e.target?.result as string
                 const img = document.createElement("img")
                 img.src = img_url
                 
                 img.onload = (event) => {
                     const canvas = document.createElement("canvas")
-                    const ratio = info.width / event.target?.width
-
+                    const ratio = info.width / (event.target as HTMLImageElement).width
+                    
                     canvas.width = info.width
-                    canvas.height = event.target?.height * ratio
+                    canvas.height = (event.target as HTMLImageElement).height * ratio
 
                     const ctx = canvas.getContext("2d")
                     ctx?.drawImage(img, 0, 0, canvas.width, canvas.height)

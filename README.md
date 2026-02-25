@@ -1,7 +1,7 @@
 # eureka-utils
 
-Uma descrição bem curta do que essa coisa faz (já que você não consegue ser breve).
+A group of useful APIs and Classes that I use in many of my projets.
 
-## Como instalar
+## How to Install
 ```bash
 npm install eureka-utils

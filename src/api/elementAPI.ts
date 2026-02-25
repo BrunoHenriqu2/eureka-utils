@@ -25,11 +25,13 @@ export function findFirstAncestor(element: HTMLElement, ancestorInfo: { tag: str
         if (ancestor.tagName === ancestorInfo.tag.toUpperCase()) {
             if (ancestorInfo.attributes) {
                 for (const [key, v] of Object.entries(ancestorInfo.attributes)) {
-                    if (ancestor[key] !== v) continue
+                    if ((ancestor as any)[key] !== v) continue
                 }
             }
             
             break
+        } else {
+            ancestor = element.parentElement
         }
     }
 
@@ -37,8 +39,7 @@ export function findFirstAncestor(element: HTMLElement, ancestorInfo: { tag: str
 }
 
 export function loadBeforeHTML(element: HTMLElement, beforeHTML: string, beforeRegex: RegExp) {
-    if (!beforeRegex) { throw new Error("O Regex precisa ser definido! " + beforeRegex) }
-    //console.log(element.innerHTML)
+    if (!beforeRegex) { throw new Error("O Regex precisa ser definido! " + beforeRegex) } //console.log(element.innerHTML)    
     element.innerHTML = element.innerHTML.replace(beforeRegex, `${beforeHTML}${beforeRegex.source}`)
 }
 
