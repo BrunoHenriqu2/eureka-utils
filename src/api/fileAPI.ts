@@ -1,7 +1,7 @@
 export const version = "1.0.0"
 
-export function urlToFile(url: string, name: string = "file.jpeg") {
-    if (!url || typeof url !== "string") { throw new Error("Invalid url was passed") }
+export function urlToFile(url: string, name: string = "file.jpeg"): Promise<File> {
+    if (!url || typeof url !== "string") { throw new Error("Invalid url arg") }
 
     return new Promise(resolve => {
         const arr = url.split(",")
@@ -28,7 +28,7 @@ export function urlToFileSync(url: string, name: string = "file.jpeg") {
     const arr = url.split(",")
     const data = arr[1]
     const mimeMatch = arr[0]?.match(/:(.*?);/)
-    if (!mimeMatch || !data) throw new Error("Error while matching mime and data")
+    //if (!mimeMatch || !data) throw new Error("Error while matching mime and data")
 
     const mime = mimeMatch[1]
     const dataString = atob(data)
@@ -45,4 +45,5 @@ export function urlToFileSync(url: string, name: string = "file.jpeg") {
 export default {
     version,
     urlToFile,
+    urlToFileSync,
 }

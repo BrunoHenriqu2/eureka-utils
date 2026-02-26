@@ -1,5 +1,7 @@
+export const version = "1.0.0"
+
 export function decodificatePtBr(value: string) {
-    if (typeof value !== "string") { throw new Error("O valor deve ser uma string! Ex: '1.234,56' (sem R$ ou outros caracteres)") }
+    if (typeof value !== "string") { throw new Error("Value must be a string! Ex: '1.234,56'") }
 
     let conversion: string | number = value.replace(/[^\d,]/g, "")
     conversion = conversion.replace(",", ".")
@@ -26,6 +28,7 @@ export const consortium = {
 }
 
 export default {
+    version,
     locatePtBr,
     decodificatePtBr,
     consortium

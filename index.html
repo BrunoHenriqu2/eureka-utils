@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="file" name="" id="">
+    <img src="" alt="">
+</body>
+<script>
+    console.log("!")
+    function urlToFileSync(url, name = "file.jpeg") {
+        if (!url || typeof url !== "string") {
+            throw new Error("Invalid url arg");
+        }
+        const arr = url.split(",");
+        const data = arr[1];
+        const mimeMatch = arr[0]?.match(/:(.*?);/);
+        if (!mimeMatch || !data)
+            throw new Error("Error while matching mime and data");
+        const mime = mimeMatch[1];
+        const dataString = atob(data);
+        let n = dataString.length;
+        let dataArr = new Uint8Array(dataString.length);
+        while (n--) {
+            dataArr[n] = dataString.charCodeAt(n);
+        }
+        const file = new File([dataArr], name, { type: mime });
+        return file;
+    }
+    class Jpeg {
+        quality = .7;
+        fileName = "file.jpeg";
+        heigh = undefined;
+        width = 800;
+        file = undefined;
+        constructor(blob, info = {}) {
+            this.quality = info.quality || this.quality;
+            this.fileName = info.fileName || this.fileName;
+            this.heigh = info.heigh || this.heigh;
+            this.width = info.width || this.width;
+
+            const fileReader = new FileReader;
+            fileReader.onload = (e) => {
+                const img_url = e.target?.result;
+                const img = document.createElement("img");
+                img.src = img_url;
+                img.onload = (event) => {
+                    const canvas = document.createElement("canvas");
+                    const ratio = this.width / event.target.width;
+                    canvas.width = this.width;
+                    canvas.height = event.target.height * ratio;
+                    const ctx = canvas.getContext("2d");
+                    ctx?.drawImage(img, 0, 0, canvas.width, canvas.height);
+                    const resizedImgUrl = canvas.toDataURL("image/jpeg", this.quality); //console.log(resizedImgUrl)
+                    const newFile = urlToFileSync(resizedImgUrl, `${this.fileName}`);
+                    this.file = newFile
+                };
+            };
+            fileReader.onerror = (err) => {
+                fileReader.abort();
+                new DOMException(`Cannot read the file! ${err}`)
+            };
+            fileReader.readAsDataURL(blob);
+        }
+    }
+
+    document.querySelector("input[type='file']").addEventListener("change", () => {
+        console.log(new Jpeg(document.querySelector("input[type='file']").files[0], "new.jpg"))
+    })
+    console.log("?")
+</script>
+
+</html>

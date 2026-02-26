@@ -1,7 +1,7 @@
 {
   "name": "eureka-utils",
-  "version": "1.0.0",
-  "description": "",
+  "version": "1.0.1",
+  "description": "A group of useful APIs and Classes that I use in many of my projets",
   "main": "dist/main.js",
   "files": [
     "dist"

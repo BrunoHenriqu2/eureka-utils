@@ -1,46 +1,45 @@
-import { urlToFile } from "../api/fileAPI.js"
+import { urlToFile, urlToFileSync } from "../api/fileAPI.js"
 
 export default class Jpeg {
     quality: number = .7
     fileName: string = "file.jpeg"
-    heigh?: number | undefined = undefined
     width: number = 800
+    file: File | undefined = undefined
+    url: string | undefined = undefined
 
     constructor(blob: Blob, info: Jpeg | Record<string, any> = {}) {
         this.quality = info.quality || this.quality
         this.fileName = info.fileName || this.fileName
-        this.heigh = info.heigh || this.heigh
         this.width = info.width || this.width
 
-        new Promise((resolve, reject) => {
-            const fileReader = new FileReader
+        const fileReader = new FileReader
 
-            fileReader.onload = (e) => {
-                const img_url = e.target?.result as string
-                const img = document.createElement("img")
-                img.src = img_url
-                
-                img.onload = (event) => {
-                    const canvas = document.createElement("canvas")
-                    const ratio = info.width / (event.target as HTMLImageElement).width
-                    
-                    canvas.width = info.width
-                    canvas.height = (event.target as HTMLImageElement).height * ratio
+        fileReader.onload = (e) => {
+            const img_url = e.target?.result as string
+            const img = document.createElement("img")
+            img.src = img_url
 
-                    const ctx = canvas.getContext("2d")
-                    ctx?.drawImage(img, 0, 0, canvas.width, canvas.height)
+            img.onload = (event) => {
+                const canvas = document.createElement("canvas")
+                const ratio = this.width / (event.target as HTMLImageElement).width
 
-                    const resizedImgUrl = canvas.toDataURL("image/jpeg", this.quality) //console.log(resizedImgUrl)
-                    let newFile = urlToFile(resizedImgUrl, `${info.fileName}`)
+                canvas.width = this.width
+                canvas.height = (event.target as HTMLImageElement).height * ratio
 
-                    resolve(newFile)
-                }
+                const ctx = canvas.getContext("2d")
+                ctx?.drawImage(img, 0, 0, canvas.width, canvas.height)
+
+                const resizedImgUrl = canvas.toDataURL("image/jpeg", this.quality) //console.log(resizedImgUrl)
+                const newFile = urlToFileSync(resizedImgUrl, `${this.fileName}`)
+
+                this.url = resizedImgUrl
+                this.file = newFile
             }
-            fileReader.onerror = (err) => {
-                fileReader.abort()
-                reject(new DOMException(`Cannot read the file! ${err}`))
-            }
-            fileReader.readAsDataURL(blob)
-        })
+        }
+        fileReader.onerror = (err) => {
+            fileReader.abort()
+            reject(new DOMException(`Cannot read the file! ${err}`))
+        }
+        fileReader.readAsDataURL(blob)
     }
 }
